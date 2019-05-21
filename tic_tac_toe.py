@@ -1,12 +1,18 @@
-import tkinter														#imports tkinter Module
+#Imports tkinter module (Used for drawing GUI).
+import tkinter
 
-root = tkinter.Tk()													#sets "root" variable (base window) to tkinter.Tk class
+#Sets Root variable (base window) to tkinter.Tk class.
+root = tkinter.Tk()
+
+#Sets title of window			
 root.title("Tic-Tac-Toe")
 
-x = tkinter.PhotoImage(file="x.png")								#image import, must be inside root
+#Variables for image imports - must be inside Root.
+x = tkinter.PhotoImage(file="x.png")								
 o = tkinter.PhotoImage(file="o.png")	
 blank = tkinter.PhotoImage(file="blank.png")	
 
+#Defining other variables used for game status.
 button1_status = "blank"
 button2_status = "blank"
 button3_status = "blank"
@@ -17,15 +23,10 @@ button6_status = "blank"
 button7_status = "blank"
 button8_status = "blank"
 button9_status = "blank"
-
 turn = 0
 gameover = False
 
-def click(status, num):
-
-	global button1
-	global turn
-	global gameover
+def click(status, num): #This function is called when one of the buttons is clicked.
 
 	global button1_status
 	global button2_status
@@ -37,10 +38,12 @@ def click(status, num):
 	global button7_status
 	global button8_status
 	global button9_status
+	global turn
+	global gameover
 
 	if gameover == False:
-
-		if num == 1:
+		#This should probably be turned into a Loop at some point.
+		if num == 1: 
 			if button1_status == "blank" and turn % 2 == 0:
 				button1.config(image=x)
 				button1_status = "x"
@@ -158,7 +161,7 @@ def click(status, num):
 				label.config(text="X's turn.")
 				win_check()
 			
-def win_check():
+def win_check(): #This function is called at the end of each button click.
 
 	global button1_status
 	global button2_status
@@ -170,9 +173,9 @@ def win_check():
 	global button7_status
 	global button8_status
 	global button9_status
-	
 	global gameover
-
+	
+	#This should probably be turned into a Loop at some point.
 	if button1_status == "x" and button2_status == "x" and button3_status == "x":
 		label.config(text="X wins!")
 		gameover = True
@@ -197,7 +200,6 @@ def win_check():
 	elif button3_status == "x" and button5_status == "x" and button7_status == "x":
 		label.config(text="X wins!")
 		gameover = True
-	
 	elif button1_status == "o" and button2_status == "o" and button3_status == "o":
 		label.config(text="O wins!")
 		gameover = True
@@ -222,25 +224,20 @@ def win_check():
 	elif button3_status == "o" and button5_status == "o" and button7_status == "o":
 		label.config(text="O wins!")
 		gameover = True	
-		
-canvas = tkinter.Canvas(root, width=318, height=358)										#defines "canvas" variable, including location(inside root)
-canvas.pack()																				#activates canvas variable using "pack" placement method
 
-frame1 = tkinter.Frame(canvas)
+canvas = tkinter.Canvas(root, width=318, height=358) #Defines Canvas variable (area in window where GUI elements can be arranged), with location inside Root window					
+canvas.pack() #activates canvas variable using "pack" placement method		
+
+frame1 = tkinter.Frame(canvas) #frame1 is the space for the label that displays the game status.
 frame1.place(width=318, height=40)
 
-frame2 = tkinter.Frame(canvas)
+frame2 = tkinter.Frame(canvas) #frame2 is the space for the 9 buttons.
 frame2.place(y=40, width=318, height=318)
 
-label = tkinter.Label(frame1, text="X's turn.", bg="white", font=("", 16))
-label.place(rely=.1, width=159, height=30)
+label = tkinter.Label(frame1, text="X's turn.", bg="white", font=("", 16)) #label displays the game status.
+label.place(rely=.1, width=318, height=30)
 
-#Sets the default value for the OptionMenu
-testvar = tkinter.StringVar(frame1)
-testvar.set("2-Player")
-
-dropdown = tkinter.OptionMenu(frame1, testvar, "2-Player", "AI (Easy)", "AI (Hard)")
-dropdown.place(relx=.5, rely=.1, width=159, height=30)
+#Below, each variable for the 9 button is defined and then placed inside frame2.
 button1 = tkinter.Button(frame2, image=blank, width=100, height=100, command=lambda: click(button1_status, 1))
 button1.grid(row=0, column=0)
 button2 = tkinter.Button(frame2, image=blank, width=100, height=100, command=lambda: click(button2_status, 2))
@@ -260,4 +257,4 @@ button8.grid(row=2, column=1)
 button9 = tkinter.Button(frame2, image=blank, width=100, height=100, command=lambda: click(button9_status, 9))
 button9.grid(row=2, column=2)
 
-root.mainloop()
+root.mainloop() #This line causes the Root window to remain on the screen.
